@@ -1,0 +1,99 @@
+<html>
+  <head>
+    <script src="../lib/Archive/Tar.js"> </script>
+    <script src="../lib/Archive/Tar/File.js"> </script>
+    <script src="lib/JSAN.js"> </script>
+    <pre><script>
+
+try {
+      new JSAN('lib').use("Data.Dump");
+      new JSAN('lib').use("Test.More");
+      new JSAN('../lib').use("Archive.Tar");
+      new JSAN('../lib').use("Archive.Tar.File");
+
+      var tar = new Archive.Tar;
+      tar.read("testfile.tar.gz");
+
+      plan({ tests: 10 });
+
+      var files = [ { name: "file.txt",   mode: 420,
+                      uid: 30000,         gid: 100,
+                      size: 20,           mtime: new Date("Thu, 01 Mar 2007 22:09:02 GMT"),
+                      chksum: 5109,       typeflag: 0,
+                      linkname: "",       magic: 0,
+                      version: 0,         uname: "kevinj",
+                      gname: "users",     devmajor: 0,
+                      devminor: 0,        prefix: ""
+                    },
+                    {
+                      name: "file2.txt",  mode: 420,
+                      uid: 30000,         gid: 100,
+                      size: 20,           mtime: new Date("Thu, 01 Mar 2007 22:26:40 GMT"),
+                      chksum: 5146,       typeflag: 0,
+                      linkname: "",       magic: 0,
+                      version: 0,         uname: "kevinj",
+                      gname: "users",     devmajor: 0,
+                      devminor: 0,        prefix: ""
+                    }
+                  ];
+      var hfields;
+      for (var i in files[0]) {
+        if (files.[0].hasOwnProperty(i)) {
+          hfields.push(i);
+	}
+      }
+
+      isDeeply( tar.listFiles(), 
+                ["file.txt", "file2.txt"], 
+                "listFiles(name)"
+              );
+
+      isDeeply( tar.listFiles("name"), 
+                ["file.txt", "file2.txt"], 
+                "listFiles(name)"
+              );
+
+      isDeeply( tar.listFiles("version","name"),
+                [{name:'file.txt', version: 0},
+                 {name:'file2.txt', version: 0}
+                ],
+                "listFiles(version, name)"
+              );
+
+      isDeeply( tar.listFiles("name","mode","uid","gid","size","mtime",
+                              "chksum","typeflag","linkname","magic",
+                              "version","uname","gname","devmajor",
+                              "devminor","prefix"
+                             ), files, "All fields");
+
+      var files = tar.getFiles();
+
+      var headers = ['name','mode','uid','gid','size','mtime','chksum','type','linkname',
+                     'magic','version','uname','gname','devminor','devmajor','prefix'
+                    ];
+      for (var i=0; i<headers.length; i++) {
+      }
+        
+      is(files[0].name(), "file.txt", "Archive.Tar.File.name()");
+      is(files[0].mode(), "file.txt", "Archive.Tar.File.mode()");
+      is(files[0].uid(), "file.txt", "Archive.Tar.File.uid()");
+      is(files[0].gid(), "file.txt", "Archive.Tar.File.gid()");
+      is(files[0].size(), "file.txt", "Archive.Tar.File.size()");
+      is(files[0].mtime(), "file.txt", "Archive.Tar.File.mtime()");
+      is(files[0].chksum(), "file.txt", "Archive.Tar.File.chksum()");
+      is(files[0].type(), "file.txt", "Archive.Tar.File.type()");
+      is(files[0].linkname(), "file.txt", "Archive.Tar.File.linkname()");
+      is(files[0].linkname(), "file.txt", "Archive.Tar.File.linkname()");
+
+      ok(1);
+      ok(1);
+      ok(1);
+      ok(1);
+      ok(1);
+
+} catch (e) { alert(e) }
+    </script></pre>
+  </head>
+  <body>
+  </body>
+</html>
