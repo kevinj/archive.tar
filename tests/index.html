@@ -43,13 +43,13 @@ try {
 	}
       }
 
-      isDeeply( tar.listFiles(), 
-                ["file.txt", "file2.txt"], 
+      isDeeply( tar.listFiles(),
+                ["file.txt", "file2.txt"],
                 "listFiles(name)"
               );
 
-      isDeeply( tar.listFiles("name"), 
-                ["file.txt", "file2.txt"], 
+      isDeeply( tar.listFiles("name"),
+                ["file.txt", "file2.txt"],
                 "listFiles(name)"
               );
 
@@ -73,7 +73,7 @@ try {
                     ];
       for (var i=0; i<headers.length; i++) {
       }
-        
+
       is(files[0].name(), "file.txt", "Archive.Tar.File.name()");
       is(files[0].mode(), "file.txt", "Archive.Tar.File.mode()");
       is(files[0].uid(), "file.txt", "Archive.Tar.File.uid()");
